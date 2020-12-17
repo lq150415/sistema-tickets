@@ -15,11 +15,12 @@ const db = admin.database();
 router.get('/',(req, res)=>{
     db.ref('tickets').once('value',(snapshot)=>{
         const data = snapshot.val();
-        res.render('index',{tickets: data});
+        res.json(data);
     })
 });
 
-router.post('/new-ticket',(req,res)=>{
+router.post('/',(req,res)=>{
+    console.log(req);
     var f = new Date();
     const newTicket ={
         tipo: req.body.tipo,
@@ -28,11 +29,12 @@ router.post('/new-ticket',(req,res)=>{
     }
     console.log(newTicket);
     db.ref('tickets').push(newTicket);
-    res.redirect('/')
+    res.json('OK')
 });
 
-router.get('/delete-ticket/:id',(req, res)=>{
+router.delete('/:id',(req, res)=>{
      db.ref('tickets/'+req.params.id).remove();
-     res.redirect('/');
+     res.json('OK')
+
 });
 module.exports = router;

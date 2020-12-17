@@ -18,11 +18,10 @@ app.set('view engine','.hbs');
 
 //middlewares
 app.use(morgan('dev'));
-app.use(express.urlencoded({extended:false}));
+app.use(express.json());
 
 //routes
-
-app.use(require('./routes/index'));
+app.use('/tickets',require('./routes/index'));
 
 //static files 
 app.use(express.static(path.join(__dirname,'public')));
